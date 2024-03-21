@@ -40,7 +40,7 @@ const AllProducts = () => {
 
     
   return (
-    <div>
+    <div className='productSection'>
         {!products ? (
             <p>No products added</p>
         ) : (
@@ -59,7 +59,7 @@ const AllProducts = () => {
                                 <>
                                     <tr key={item._id}>
                                         <td>{item.productName}</td>
-                                        <td>{item.price}</td>
+                                        <td>₹{item.price}</td>
                                     <td>
                                         {item.image && (
                                             <img src={`${API_URL}/uploads/${item.image}`} 
@@ -69,7 +69,9 @@ const AllProducts = () => {
                                         )}
                                     </td>
                                     <td>
-                                        <button onClick={()=>deleteProductById(item._id)} >Delete</button>
+                                        <button onClick={()=>deleteProductById(item._id)}
+                                        className='deleteBtn'
+                                        >Delete</button>
                                     </td>
                                     </tr>
                                 </>

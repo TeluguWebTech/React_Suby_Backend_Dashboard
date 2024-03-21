@@ -7,6 +7,12 @@ const Register = ({showLoginHandler}) => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
+  const [showPassword, setShowPassword] = useState(false)
+
+  const handleShowPassword = ()=>{
+    setShowPassword(!showPassword);
+  }
+  
 
 const handleSubmit = async(e)=>{
     e.preventDefault();
@@ -49,7 +55,10 @@ try {
             <label>Email</label>
             <input type="text" name='email' value={email} onChange={(e)=>setEmail(e.target.value)} placeholder='enter your email'/><br />
             <label>Password</label>
-            <input type="password" value={password} onChange={(e)=>setPassword(e.target.value)} name='password' placeholder='enter your password'/><br />
+            <input type={showPassword? "text":"password"} value={password} onChange={(e)=>setPassword(e.target.value)} name='password' placeholder='enter your password'/><br />
+            <span className='showPassword'
+              onClick={handleShowPassword}
+              >{showPassword ? 'Hide' : 'Show'}</span>
     <div className="btnSubmit">
         <button type='submit'>Submit</button>
     </div>

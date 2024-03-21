@@ -17,7 +17,9 @@ const NavBar = ({showLoginHandler, showRegisterHandler, showLogOut, logOutHandle
           {!showLogOut ?  <>
            <span onClick={showLoginHandler}>Login / </span>
           <span onClick={showRegisterHandler}>Register</span>
-          </> : <span onClick={logOutHandler}>Logout</span>  }
+          </> : <span onClick={logOutHandler}
+          className='logout'
+          >Logout</span>  }
           
         </div>
     </div>
