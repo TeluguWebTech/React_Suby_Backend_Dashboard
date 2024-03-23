@@ -278,4 +278,9 @@ h3 {
     position: absolute;
     bottom: 90px;
     right: 135px;
+    cursor: pointer;
+}
+
+.loaderSection {
+    z-index: 10000;
 }

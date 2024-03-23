@@ -1,6 +1,8 @@
 
 import React, {useState} from 'react'
 import { API_URL } from '../../data/apiPath';
+import { ThreeCircles } from 'react-loader-spinner';
+
 
 const AddFirm = () => {
   const [firmName, setFirmName] = useState("");
@@ -9,6 +11,8 @@ const AddFirm = () => {
   const [region, setRegion] = useState([]);
   const [offer, setOffer] = useState("");
   const [file, setFile] = useState(null);
+  const [loading, setLoading] = useState(false); 
+
 
   const handleCategoryChange = (event)=>{
       const value = event.target.value;
@@ -34,6 +38,8 @@ const AddFirm = () => {
 
   const handleFirmSubmit= async(e)=>{
         e.preventDefault();
+    setLoading(true); 
+
    try {
         const loginToken = localStorage.getItem('loginToken');
         if(!loginToken){
@@ -76,10 +82,7 @@ const AddFirm = () => {
               alert('Failed to add Firm')
           }
 
-          console.log("this is firmId",data.firmId);
-          console.log("firmdetaisl data:", data)
-
-          const mango = data.firmId;
+               const mango = data.firmId;
           const vendorRestuarant = data.vendorFirmName
 
           localStorage.setItem('firmId', mango);
@@ -88,14 +91,27 @@ const AddFirm = () => {
 
    } catch (error) {
       console.error("failed to add Firm")
-   }     
+      alert("failed to add Firm")
+   } finally {
+    setLoading(false); 
+  }  
   }
 
 
   return (
         <div className="firmSection">
-        
-           <form className="tableForm" onSubmit={handleFirmSubmit}>
+   {loading &&        <div className="loaderSection">
+        <ThreeCircles
+          visible={loading}
+          height={100}
+          width={100}
+          color="#4fa94d"
+          ariaLabel="three-circles-loading"
+          wrapperStyle={{}}
+          wrapperClass=""
+        />
+      </div>}
+         {!loading &&   <form className="tableForm" onSubmit={handleFirmSubmit}>
             <h3>Add Firm</h3>
                 <label >Firm Name</label>
                 <input type="text" name='firmName' value={firmName} onChange={(e)=>setFirmName(e.target.value)}/>
@@ -156,7 +172,7 @@ const AddFirm = () => {
             <div className="btnSubmit">
         <button type='submit'>Submit</button>
     </div>
-           </form>
+           </form>}
         </div>
   )
 }

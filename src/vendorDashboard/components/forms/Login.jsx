@@ -1,10 +1,12 @@
 import React, {useState} from 'react'
 import { API_URL } from '../../data/apiPath';
+import { ThreeCircles } from 'react-loader-spinner';
 
 
 const Login = ({showWelcomeHandler}) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false); 
   const [showPassword, setShowPassword] = useState(false)
 
   const handleShowPassword = ()=>{
@@ -14,6 +16,7 @@ const Login = ({showWelcomeHandler}) => {
 
   const loginHandler = async(e)=>{
       e.preventDefault();
+    setLoading(true); 
       try {
           const response = await fetch(`${API_URL}/vendor/login`, {
             method: 'POST',
@@ -44,12 +47,26 @@ const Login = ({showWelcomeHandler}) => {
           }
       } catch (error) {
           alert("login fail")
+      } finally {
+        setLoading(false); 
       }
   }
 
   return (
     <div className="loginSection">
-        <form  className='authForm' onSubmit={loginHandler} autoComplete='off'>
+{loading &&        <div className="loaderSection">
+        <ThreeCircles
+          visible={loading}
+          height={100}
+          width={100}
+          color="#4fa94d"
+          ariaLabel="three-circles-loading"
+          wrapperStyle={{}}
+          wrapperClass=""
+        />
+        <p>Login in process... Please wait</p>
+      </div>}
+     {!loading &&    <form  className='authForm' onSubmit={loginHandler} autoComplete='off'>
         <h3>Vendor Login</h3>
             <label>Email</label>
             <input type="text" name='email' value = {email} onChange={(e)=>setEmail(e.target.value)} placeholder='enter your email'/><br />
@@ -61,7 +78,7 @@ const Login = ({showWelcomeHandler}) => {
     <div className="btnSubmit">
         <button type= 'submit'>Submit</button>
     </div>
-        </form>
+        </form>}
     </div>
   )
 }
